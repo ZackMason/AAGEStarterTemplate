@@ -24,20 +24,11 @@ int main(int argc, char** argv) {
     window.open_window();
     window.set_title("AAGE Template");
     
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    
-    ImGui::StyleColorsDark();
-    
-    ImGui_ImplGlfw_InitForOpenGL(window.window, true);
-    ImGui_ImplOpenGL3_Init("#version 130");
-
     v3f color{1.0f, 0.0f, 0.0f};
-    transform_t transform{};
+    transform_t transform;
 
     while(!window.should_close()) {
-        color = transform.xform(color);
+        color = glm::min(transform.xform(color), 1.0f);
         transform.rotate({0.00004f, 0.00002f, 0.00001f});
 
         glClearColor(color.r, color.g, color.b, 1.0f);
